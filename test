@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>테스트</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>🧪 테스트 페이지</h1>
+    <button onclick="openInNewWindow()">열기</button>
+
+    <script>
+      function openInNewWindow() {
+        window.open("https://https://idus.kr/F6M1k", "_blank");
+      }
+    </script>
+  </body>
+</html>
