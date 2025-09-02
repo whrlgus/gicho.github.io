@@ -23,6 +23,11 @@
       function openInNewWindow() {
         window.open("https://airbridge.idus.com/@idus/kakao_message?ad_creative=targetad&ad_group=product&campaign=250512_nemo&og_tag_id=157569453&routing_short_id=bu1byy&tracking_template_id=45033d7817d5b73886eeb233f3920076&ad_type=click", "_blank");
       }
+
+      function handleExternalLink(element) {
+            const url = element.href;
+            openExternalUrl(url);
+        }
       
       function openExternalUrl(url) {
             // 앱의 JavaScript Bridge로 메시지 전송
