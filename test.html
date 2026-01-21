@@ -1,54 +1,71 @@
+<!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <title>주소 찾기</title>
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
-  </head>
-  <body onload="execDaumPostcode()">
-  <div id = "layer" style = "display:block; position:absolute; overflow:hidden; z-index:1; -webkit-overflow-scrolling:touch; ">
-  </div>
-  <script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
-  <script>
-    window.addEventListener("message", onReceivedPostMessage, false);
-
-    function postMessageToiOS(postData) {
-        window.webkit.messageHandlers.callBackHandler.postMessage(postData);
-    }
-
-    var element_layer = document.getElementById('layer');
-    function execDaumPostcode() {
-      new daum.Postcode({
-        oncomplete: function(data) {
-          var jibunAddress = ""
-
-          if (data.jibunAddress == "") {
-            jibunAddress = data.autoJibunAddress
-          } else if (data.autoJibunAddress == "") {
-            jibunAddress = data.jibunAddress
-          }
-
-          var postData = {
-              roadAddress : data.roadAddress,
-              jibunAddress : jibunAddress,
-              zonecode : data.zonecode
-          };
-          window.postMessageToiOS(postData);
-        },
-        width : '100%',
-        height : '100%'
-      }).embed(element_layer);
-      element_layer.style.display = 'block';
-      initLayerPosition();
-    }
-
-    function initLayerPosition(){
-      var width = (window.innerWidth || document.documentElement.clientWidth);
-      var height = (window.innerHeight || document.documentElement.clientHeight);
-      element_layer.style.width = width + 'px';
-      element_layer.style.height = height + 'px';
-      element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2) + 'px';
-      element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2) + 'px';
-    }
-  </script>
-  </body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Link 테스트</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 { font-size: 24px; }
+        h2 { font-size: 18px; margin-top: 30px; color: #666; }
+        a {
+            display: block;
+            padding: 15px;
+            margin: 10px 0;
+            background: #007AFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            text-align: center;
+        }
+        a:active { background: #005BB5; }
+        .section { margin-bottom: 40px; }
+        .note {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Universal Link 테스트</h1>
+ 
+    <div class="note">
+        <strong>예상 동작:</strong><br>
+        - 같은 도메인 링크: 배너만 표시 (앱 바로 안 열림)<br>
+        - 다른 도메인 링크: 앱 바로 열림
+    </div>
+ 
+    <div class="section">
+        <h2>같은 도메인 (앱 안 열림 예상)</h2>
+        <a href="https://www.dev.id-us.me/v2/mypage">내정보</a>
+        <a href="/v2/product/40285024-bff9-4274-8037-1f6ae36e201b">PDP</a>
+        <a href="/v2/recommend/product?product_uuid=136cefd7-c731-42d5-9be9-933c64f3d775">추천 PDP</a>
+        <a href="/v2/showroom/11293?banner_item_id=4671">기획전</a>
+        <a href="/v2/search?keyword=설선물">SRP</a>
+    </div>
+ 
+    <div class="section">
+        <h2>Custom Scheme (앱 바로 열림)</h2>
+        <a href="idus://client/mypage">idus:// 내정보</a>
+        <a href="idus://client/product?value=40285024-bff9-4274-8037-1f6ae36e201b">idus:// PDP</a>
+    </div>
+ 
+    <div class="section">
+        <h2>외부 도메인 → 여기로 (앱 열림 예상)</h2>
+        <p style="font-size: 14px; color: #666;">
+            아래 링크를 메모 앱에 복사해서 테스트하세요:
+        </p>
+        <code style="display: block; padding: 10px; background: #f0f0f0; border-radius: 5px; word-break: break-all;">
+            https://connections-dispatch-truck-initiatives.trycloudflare.com/v2/mypage
+        </code>
+    </div>
+</body>
 </html>
